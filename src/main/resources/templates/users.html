@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/authenticated.html}">
+<head>
+<meta charset="UTF-8">
+<title>Users</title>
+</head>
+<body>
+
+	<div layout:fragment="content">
+		<div class="card">
+			<div class="card-header">
+				<i class="bi-people"></i> User Management
+			</div>
+			<div class="card-body">
+				<form class="row">
+					<div class=col-3>
+						<select name="status" id="status" class="form-select">
+							<option th:selected="${#strings.equals(param.status, '')}" value="">All User</option>
+							<option th:selected="${#strings.equals(param.status, 'true')}" value="true">Active</option>
+							<option th:selected="${#strings.equals(param.status, 'false')}" value="false">Removed</option>
+						</select>
+
+					</div>
+
+					<div class=col-auto>
+						<input type="text" class="form-control" name="name"
+							placeholder="Name" th:value="${param.name}" />
+					</div>
+
+					<div class=col-auto>
+						<input type="tel" class="form-control" name="phone"
+							placeholder="Phone" th:value="${param.phone}" />
+					</div>
+
+					<div class="col">
+						<button type="submit" class="btn btn-primary">
+							<i class="bi-search"></i> Search
+						</button>
+					</div>
+
+				</form>
+			</div>
+		</div>
+
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Phone</th>
+					<th>Email</th>
+					<th>Status</th>
+					<th></th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:each="user : ${list}" class="align-middle">
+					<td th:text="${user.id}"></td>
+					<td th:text="${user.name}"></td>
+					<td th:text="${user.phone}"></td>
+					<td th:text="${user.email}"></td>
+					<td th:text="${user.status ? 'Active' : 'Suspend' }"></td>
+					<th><a href="#" th:attr="data-id=${user.id},data-status=${user.status},data-user=${user.name}" class="btn btn-link changeUserStatusLink">
+						<i th:if="${user.status}" class="bi-trash"></i>
+						<i th:unless="${user.status}" class="bi-check"></i>
+					</a></th>
+				</tr>
+			</tbody>
+		</table>
+	<div th:replace="~{/fragments/modal :: userStatusChange}"></div>
+	</div>
+
+</body>
+</html>

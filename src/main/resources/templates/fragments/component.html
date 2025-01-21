@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title></title>
+</head>
+<body>
+	<div th:fragment="pagination(page)">
+				<div class="d-flex justify-content-end" th:if="${page.show}">
+				
+				<div class="col-auto me-2">
+					<select class="form-select" th:if="${#lists.size(page.sizes) gt 0}" th:attr="data-form-id=${page.sizeChangeFormId}" id="pageSizeChageSelect" >
+						<option th:each="size : ${page.sizes}" th:selected="${#strings.equals(size, param.size)}" th:value="${size}" th:text="${size}"></option>
+					</select>
+				</div>
+					
+					<a th:href="@{${page.url}(page=0,size=${param.size})} + ${page.params}" th:classappend="${page.first} ? 'disabled'" class="btn btn-outline-secondary me-1"><i class="bi-skip-backward"></i> </a>
+					<a th:href="@{${page.url}(page=${page.currentPage-1},size=${param.size})}  + ${page.params}" th:classappend="${page.first} ? 'disabled'" class="btn btn-outline-secondary me-1"><i class="bi-skip-start"></i> </a>
+					
+					<a th:each="pageNum : ${page.pages}"  th:href="@{${page.url}(page=${pageNum},size=${param.size})} + ${page.params}" th:text="${pageNum+1}" th:classappend="${page.currentPage==pageNum} ? 'disabled btn-secondary' : 'btn-outline-secondary'" class="btn me-1">
+					
+					</a>
+					
+					<a th:href="@{${page.url}(page=${page.currentPage+1},size=${param.size})} + ${page.params}" th:classappend="${page.last} ? 'disabled'" class="btn btn-outline-secondary me-1"><i class="bi-skip-end"></i> </a>
+					<a th:href="@{${page.url}(page=${page.totalPages-1},size=${param.size})} + ${page.params}" th:classappend="${page.last} ? 'disabled'" class="btn btn-outline-secondary me-1"><i class="bi-skip-forward"></i> </a>
+					
+				</div>
+				
+				
+	</div>
+	
+		<div class="card" th:fragment="balance-details-list(dto,readOnly)">
+			<div class="card-header"><span th:text="${dto.header.type}"></span> Details List</div>
+			
+			<div class="card-body">
+				<table class="table table-striped">
+					<thead>	
+						
+					</thead>
+						
+						<tr>
+							<th>No</th>
+							<th>Item Name</th>
+							<th class="text-end">Unit Price</th>
+							<th class="text-end">Quantity</th>
+							<th class="text-end">Total</th>
+							<th th:unless="${readOnly}"></th>
+						</tr>
+						
+					<tbody>
+					
+						<tr th:each="items,rowNum : ${dto.validItems}">
+							<td th:text="${rowNum.index + 1}"></td>
+							<td th:text="${items.item}"></td>
+							<td class="text-end" th:text="${#numbers.formatInteger(items.unitPrice,1,'COMMA')}"></td>
+							<td class="text-end" th:text="${#numbers.formatInteger(items.quantity,1,'COMMA')}"></td>
+							<td class="text-end" th:text="${#numbers.formatInteger(items.unitPrice * items.quantity,1,'COMMA')}"></td>
+							<td class="text-center" th:unless="${readOnly}">
+								<a th:href="@{/user/balance-edit/item(index=${rowNum.index})}" class="btn btn-link">
+									<i class="bi-trash"></i>
+								</a>
+							</td>
+						</tr>
+						
+					</tbody>
+					
+					<tfoot th:if="${readOnly}">
+						<tr>
+							<td colspan="3">Total</td>
+							<td class="text-end" th:text="${dto.totalCount}"></td>
+							<td class="text-end" th:text="${dto.total}"></td>
+							<td></td>
+						</tr>
+					</tfoot>
+				
+				</table>
+			</div>
+		</div>
+	
+</body>
+</html>

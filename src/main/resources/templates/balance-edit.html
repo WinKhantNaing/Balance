@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{/layout/authenticated.html}">
+<head>
+<meta charset="UTF-8">
+<title >Edit Details</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		
+	<!-- add details form -->
+	<div class="card mb-4">
+		<div class="card-header">
+			<i class="bi-plus"></i> Add 
+			<span th:text="${balanceEditForm.header.type}"></span>
+		</div>
+		
+		<div class="card-body">
+			<form th:action="@{/user/balance-edit/item}" method="post" th:object="${balanceItemForm}" class="row">
+				<div class="col-4">
+					<input type="text" th:field="*{item}" class="form-control" placeholder="Enter Item Name" />
+					<span th:errors="*{item}" class="text-danger"></span>
+				</div>
+				
+				<div class="col-2">
+					<input type="number" th:field="*{unitPrice}" class="form-control" placeholder="Unit Price" />
+					<span th:errors="*{unitPrice}" class="text-danger"></span>
+				</div>
+				
+				<div class="col-2">
+					<input type="number" th:field="*{quantity}"  class="form-control" placeholder="Quantity" />
+					<span th:errors="*{quantity}" class="text-danger"></span>
+				</div>
+				
+				<div class="col">
+					<button class="btn btn-primary" type="submit">
+						<i class="bi-plus"></i> Add Item
+					</button>
+					<a th:href="@{/user/balance-edit/confirm}" th:if="${balanceEditForm.showSaveBtn}" class="btn btn-secondary">
+						<i class="bi-save"></i> Save
+					</a>
+					
+				</div>
+			</form>
+		</div>
+	</div>
+	
+	
+	<!-- details list -->
+		<div th:replace="fragments/component :: balance-details-list(${balanceEditForm}, false)"></div>
+		
+	</div>
+</body>
+</html>

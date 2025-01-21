@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="/layout/authenticated.html">
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+<script th:src="@{/webjars/chart.js/4.4.7/dist/chart.umd.js}"></script>
+</head>
+<body>
+
+	<div layout:fragment="content">
+	
+		<canvas id="myChart" width="400" height="200"></canvas>
+		
+		<script th:inline="javascript">
+	    const chartLabels = /*[[${labels}]]*/ [];
+	    const chartIncomeData = /*[[${incomes}]]*/ [];
+	    const chartExpenseData = /*[[${expenses}]]*/ [];
+    var ctx = document.getElementById('myChart').getContext('2d');
+
+    var chart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: chartLabels,
+            datasets: [
+                {
+                    label: 'Income',
+                    data: chartIncomeData, // y-axis data for incomes
+                    borderColor: 'rgba(75, 192, 192, 1)',
+                    backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                },
+                {
+                    label: 'Expense',
+                    data: chartExpenseData, // y-axis data for expenses
+                    borderColor: 'rgba(255, 99, 132, 1)',
+                    backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                    borderWidth: 2,
+                    tension: 0.3,
+                },
+            ],
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    position: 'top',
+                },
+                tooltip: {
+                    mode: 'index',
+                    intersect: false,
+                },
+            },
+            scales: {
+                x: {
+                    title: {
+                        display: true,
+                        text: 'Date',
+                    },
+                },
+                y: {
+                    title: {
+                        display: true,
+                        text: 'Amount',
+                    },
+                    beginAtZero: true,
+                },
+            },
+        },
+    });
+</script>
+		
+	</div>
+    
+    
+</body>
+</html>

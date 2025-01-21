@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{/layout/authenticated.html}">
+<head>
+<meta charset="UTF-8">
+<title>Home</title>
+</head>
+<body>
+
+
+	<div layout:fragment="content">
+	
+		<!-- search box -->
+		<div class="card">
+			<div class="card-header"><i class="bi-bar-chart"></i> Balance Report</div>
+			
+			<div class="card-body">
+				<form action="#" class="row">
+					<div class="col-3">
+						<select name="type" id="type" class="form-select">
+							<option value="">All Types</option>
+							<option th:each="type : ${balanceTypes}" th:value="${type}" th:text="${type}" th:selected="${#strings.equals(param.type,type)}" name="type"></option>
+						</select>
+					</div>
+					
+					<div class="col-auto">
+						<input type="date" name="dateFrom" th:value="${param.dateFrom}" class="form-control"/>
+					</div>
+					
+					<div class="col-auto">
+						<input type="date" name="dateTo" th:value="${param.dateTo}" class="form-control"/>
+					</div>
+					
+					<div class="col-auto">
+						<button type="submit" class="btn btn-primary"><i class="bi-search"></i> Search</button>
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		<table class="table table-striped">
+			
+			<thead>
+				<tr>
+					<th>Date</th>
+					<th>Type</th>
+					<th>Category</th>
+					<th class="text-end">Incomes</th>
+					<th class="text-end">Expenses</th>
+					<th class="text-end">Balance</th>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="data : ${list}">
+					<td th:text="${data.date}"></td>
+					<td th:text="${data.type}"></td>
+					<td th:text="${data.category}"></td>
+					<td class="text-end" th:text="${#numbers.formatInteger(data.income, 1, 'COMMA')}"></td>
+					<td class="text-end" th:text="${#numbers.formatInteger(data.expense, 1, 'COMMA')}"></td>
+					<td class="text-end" th:text="${#numbers.formatInteger(data.balance, 1, 'COMMA')}"></td>
+				</tr>
+			</tbody>
+		
+		</table>
+		<div th:include="fragments/component :: pagination(${pagination})"></div>
+				
+	</div>
+
+</body>
+</html>

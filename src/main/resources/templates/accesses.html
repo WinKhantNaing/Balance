@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+layout:decorate="~{/layout/authenticated.html}">
+<head>
+<meta charset="UTF-8">
+<title>accesses</title>
+</head>
+<body>
+	<div layout:fragment="content">
+		<div class="card">
+			<div class="card-header">
+				<i class="bi-shield"></i>AccessLogs
+			</div>
+			
+			<form th:action="@{/admin/accesses}" class="card-body row" id="accessLogSearchForm">
+		
+				<div class="col-auto">
+					<select class="form-control" name="type">
+						<option value="">All</option>
+						<option th:each="type : ${types}" th:selected="${#strings.equals(param.type, type)}" th:value="${type}" th:text="${type}">
+					</select>
+				</div>
+				
+				<div class="col-auto">
+					<input type="text" name="username" placeholder="Search Name" th:value="${param.username}" class="form-control"/>
+				</div>
+				
+				<div class="col-auto">
+					<input type="date" class="form-control" name="date" th:value="${param.date}" />
+				</div>
+				
+				<div class="col-auto">
+					<button type="submit" class="btn btn-primary">
+						<i class="bi-search"></i> Search
+					</button>
+				</div>
+			</form>
+			
+			<table class="table table-striped">
+				<thead>
+					<tr>
+						<td>User Name</td>
+						<td>Access Time</td>
+						<td>Access Type</td>
+						<td>Error Message</td>
+					</tr>
+				</thead>
+				
+				<tbody>
+					<tr th:each="log : ${list}">
+						<td th:text="${log.userName}"></td>
+						<td th:text="${#temporals.format(log.accessTime, 'yyyy-MM-dd HH:mm:ss')}"></td>
+						<td th:text="${log.type}"></td>
+						<td th:text="${log.errorMessage}"></td>
+					</tr>
+				</tbody>
+			</table>
+			
+			<div th:include="~{fragments/component.html :: pagination(${page})}"></div>
+		</div>
+	</div>
+</body>
+</html>

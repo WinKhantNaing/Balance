@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<!-- Change Password -->
+	<div th:fragment="changePass" class="modal fade" id="changePassword"
+		data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			<form th:action="@{/user/change-password}" method="post">
+			
+			<input type="hidden" name="loginId" th:value="${#authentication.name}"/>
+			
+				<div class="modal-header">
+					<h5><i class="bi-cog"></i> Change Password</h5>
+				</div>
+				
+				<div class="modal-body">	
+					<div class="mb-3">
+					<label for="pass" >Old Password</label>
+					<div class="input-group">
+						<span class="input-group-text">
+							<i class="bi-key"></i>
+						</span>
+						<input type="password" name="oldPassword" class="form-control" placeholder="Enter Old Password" id="oldpass"/>
+					</div>
+					
+				</div>
+
+				<div class="mb-3">
+					<label for="pass" >New Password</label>
+					<div class="input-group">
+						<span class="input-group-text">
+							<i class="bi-key"></i>
+						</span>
+						<input type="password" name="newPassword" class="form-control" placeholder="Enter New Password" id="newPass"/>
+					</div>
+					
+				</div>
+
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal"><i class="bi-x-square"></i> Close</button>
+					<button type="submit" class="btn btn-primary"><i class="bi-save"></i> Change Password</button>
+				</div>
+				
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	<!-- Contact Edit -->
+	<div th:fragment="contentEdit" class="modal fade" id="contentEditModal"
+		data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			<form th:action="@{/user/profile/contact}" method="post">
+			
+				<div class="modal-header">
+					<h5><i class="bi-cog"></i> Change Contact Information</h5>
+				</div>
+				
+				<div class="modal-body">	
+					<div class="mb-3">
+					<label for="pass" >Phone</label>
+					<div class="input-group">
+						<span class="input-group-text">
+							<i class="bi-key"></i>
+						</span>
+						<input type="tel" class="form-control" placeholder="Phone number" name="phone"/>
+					</div>
+					
+				</div>
+
+				<div class="mb-3">
+					<label for="pass" >Email</label>
+					<div class="input-group">
+						<span class="input-group-text">
+							<i class="bi-key"></i>
+						</span>
+						<input type="email" class="form-control" placeholder="Enter email" name="email"/>
+					</div>
+					
+				</div>
+
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal"><i class="bi-x-square"></i> Close</button>
+					<button type="submit" class="btn btn-primary"><i class="bi-save"></i> Save</button>
+				</div>
+				
+				</form>
+			</div>
+		</div>
+	</div>
+	
+	
+	<!-- User Status Change -->
+	<div th:fragment="userStatusChange" class="modal fade" id="userStatusChangeModal"
+		data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+		aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+			<form th:action="@{/admin/users/status}" method="post">
+			
+				<input type="hidden" id="changeUserId" name="id" />
+				<input type="hidden" id="changeUserStatus" name="status"/>
+			
+				<div class="modal-header">
+					<h5><i class="bi-shield"></i> Change Status</h5>
+				</div>
+				
+				<div class="modal-body">	
+					<div class="mb-3">
+						<label for="">Name</label>
+						<span id="changeUserName" class="form-control"></span>
+					</div>
+					
+					<div class="mb-3">
+						<label for="">Current Status</label>
+						<span id="changeUserStatusBefore" class="form-control"></span>
+					</div>
+					
+					<div class="mb-3">
+						<label for="">Change Status</label>
+						<span  id="changeUserStatusAfter" class="form-control"></span>
+					</div>
+				</div>
+				
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary"
+						data-bs-dismiss="modal"><i class="bi-x-square"></i> Close</button>
+					<button type="submit" class="btn btn-primary"><i class="bi-save"></i> OK</button>
+				</div>
+				
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
